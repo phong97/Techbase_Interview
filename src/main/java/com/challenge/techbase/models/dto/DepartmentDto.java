@@ -13,12 +13,12 @@ public class DepartmentDto {
     private Integer id;
     private String name;
     private Status status;
-    private Integer manager_id;
+    private UserDetailDto manager;
 
     public DepartmentDto(Department department) {
         this.id = department.getId();
         this.name = department.getName();
         this.status = department.getStatus();
-        this.manager_id = department.getUser().getId();
+        this.manager = new UserDetailDto(department.getUser());
     }
 }

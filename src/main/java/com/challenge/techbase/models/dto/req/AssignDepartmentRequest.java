@@ -1,4 +1,4 @@
-package com.challenge.techbase.models.dto;
+package com.challenge.techbase.models.dto.req;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

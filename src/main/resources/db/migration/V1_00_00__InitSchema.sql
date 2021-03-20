@@ -35,10 +35,6 @@ create table department
     name          varchar(255)                         not null,
     status        int      default 1                   not null,
     manager_id    int null,
-    created_by    int null,
-    created_date  datetime default (CURRENT_TIMESTAMP) not null,
-    modified_by   int null,
-    modified_date datetime null,
     constraint FK_department_user
         foreign key (manager_id) references user (id)
 );
@@ -50,10 +46,6 @@ create table team
     name          varchar(255)                         not null,
     status        int      default 1                   not null,
     department_id int                                  not null,
-    created_by    int null,
-    created_date  datetime default (CURRENT_TIMESTAMP) not null,
-    modified_by   int null,
-    modified_date datetime null,
     constraint FK_team_department
         foreign key (department_id) references department (id)
 );

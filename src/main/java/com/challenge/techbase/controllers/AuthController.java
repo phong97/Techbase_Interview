@@ -1,7 +1,7 @@
 package com.challenge.techbase.controllers;
 
 import com.challenge.techbase.models.entity.User;
-import com.challenge.techbase.models.dto.LoginRequest;
+import com.challenge.techbase.models.dto.req.LoginRequest;
 import com.challenge.techbase.models.dto.ReqData;
 import com.challenge.techbase.services.UserService;
 import org.slf4j.Logger;

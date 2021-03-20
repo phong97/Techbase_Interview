@@ -1,4 +1,4 @@
-package com.challenge.techbase.models.dto;
+package com.challenge.techbase.models.dto.req;
 
 import com.challenge.techbase.util.Constants;
 import lombok.Getter;

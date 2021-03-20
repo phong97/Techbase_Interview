@@ -5,7 +5,6 @@ import com.challenge.techbase.models.entity.Department;
 import com.challenge.techbase.models.entity.User;
 import com.challenge.techbase.services.DepartmentService;
 import com.challenge.techbase.util.Enum;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

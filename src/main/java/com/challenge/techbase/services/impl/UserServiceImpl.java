@@ -1,6 +1,7 @@
 package com.challenge.techbase.services.impl;
 
 import com.challenge.techbase.mappers.UserRepository;
+import com.challenge.techbase.models.entity.Team;
 import com.challenge.techbase.models.entity.User;
 import com.challenge.techbase.services.UserService;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,5 +54,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findById(int id) {
         return this.userRepo.findById(id);
+    }
+
+    @Override
+    public void addMember(Team team, User user) {
+        Set<Team> teams = user.getTeams();
+        teams.add(team);
+        user.setTeams(teams);
+        this.userRepo.saveAndFlush(user);
+    }
+
+    @Override
+    public void removeMember(Team team, User user) {
+        Set<Team> teams = user.getTeams();
+        teams.remove(team);
+        user.setTeams(teams);
+        this.userRepo.saveAndFlush(user);
     }
 }

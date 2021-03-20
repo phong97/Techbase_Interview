@@ -1,5 +1,6 @@
 package com.challenge.techbase.models.entity;
 
+import com.challenge.techbase.util.Enum.Status;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,13 +12,15 @@ import java.util.List;
 @Table(name = "department")
 @Getter
 @Setter
-public class Department extends CommonEntity {
+public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
     private String name;
+    @NotNull
+    private Status status = Status.ACTIVE;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
     private List<Team> teams;
@@ -29,10 +32,11 @@ public class Department extends CommonEntity {
     public Department() {
     }
 
-    public Department(int id, String name, User user) {
+    public Department(int id, String name, Status status, List<Team> teams, User user) {
         this.id = id;
         this.name = name;
+        this.status = status;
+        this.teams = teams;
         this.user = user;
     }
-
 }
