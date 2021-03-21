@@ -39,8 +39,8 @@ public class UserController {
     public ResponseEntity<UserDetailDto> findByEmail(@PathVariable("email") String email) {
         Optional<User> userOptional = this.userService.findByEmail(email);
         if (!userOptional.isPresent()) {
-            logger.error("User not found by id");
-            throw new RestException("User not found by id");
+            logger.error("User not found");
+            throw new RestException("User not found");
         }
 
         User user = userOptional.get();

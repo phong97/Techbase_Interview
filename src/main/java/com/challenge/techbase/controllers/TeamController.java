@@ -44,8 +44,8 @@ public class TeamController {
     public ResponseEntity<TeamDto> findTeamById(@PathVariable("id") Integer teamId) {
         Optional<Team> teamOptional = this.teamService.findById(teamId);
         if (!teamOptional.isPresent()) {
-            logger.error("Team not found by id");
-            throw new RestException("Team not found by id");
+            logger.error("Team not found");
+            throw new RestException("Team not found");
         }
 
         Team team = teamOptional.get();
@@ -68,8 +68,8 @@ public class TeamController {
         Integer teamId = req.getId();
         Optional<Team> teamOptional = this.teamService.findById(teamId);
         if (!teamOptional.isPresent()) {
-            logger.error("Team not found by id");
-            throw new RestException("Team not found by id");
+            logger.error("Team not found");
+            throw new RestException("Team not found");
         }
 
         Team team = teamOptional.get();
@@ -84,8 +84,8 @@ public class TeamController {
     public ResponseEntity<TeamDto> deleteTeam(@PathVariable("id") Integer teamId) {
         Optional<Team> teamOptional = this.teamService.findById(teamId);
         if (!teamOptional.isPresent()) {
-            logger.error("Team not found by id");
-            throw new RestException("Team not found by id");
+            logger.error("Team not found");
+            throw new RestException("Team not found");
         }
 
         Team team = teamOptional.get();
@@ -108,8 +108,8 @@ public class TeamController {
 
         Optional<User> userOptional = this.userService.findById(userId);
         if (!userOptional.isPresent()) {
-            logger.info("User not found by id");
-            throw new RestException("User not found by id");
+            logger.info("User not found");
+            throw new RestException("User not found");
         }
 
         Team team = teamOptional.get();
@@ -126,14 +126,14 @@ public class TeamController {
 
         Optional<Team> teamOptional = this.teamService.findById(teamId);
         if (!teamOptional.isPresent()) {
-            logger.info("Team not found by id");
-            throw new RestException("Team not found by id");
+            logger.info("Team not found");
+            throw new RestException("Team not found");
         }
 
         Optional<User> userOptional = this.userService.findById(userId);
         if (!userOptional.isPresent()) {
             logger.info("User not found by id");
-            throw new RestException("User not found by id");
+            throw new RestException("User not found");
         }
 
         Team team = teamOptional.get();

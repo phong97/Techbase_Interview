@@ -57,8 +57,8 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable("id") Integer id) {
         Optional<Department> departmentOptional = this.departmentService.findById(id);
         if (!departmentOptional.isPresent()) {
-            logger.error("Department not found by id");
-            throw new RestException("Department not found by id");
+            logger.error("Department not found");
+            throw new RestException("Department not found");
         }
 
         Department department = departmentOptional.get();
@@ -78,8 +78,8 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> updateDepartment(@Valid @RequestBody UpdateDepartmentRequest req) {
         Optional<Department> departmentOptional = this.departmentService.findById(req.getId());
         if (!departmentOptional.isPresent()) {
-            logger.error("Department not found by id");
-            throw new RestException("Department not found by id");
+            logger.error("Department not found");
+            throw new RestException("Department not found");
         }
         Department department = departmentOptional.get();
         Department newDepartment = req.toModel(department);
@@ -92,8 +92,8 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> deleteDepartment(@PathVariable("id") Integer id) {
         Optional<Department> departmentOptional = this.departmentService.findById(id);
         if (!departmentOptional.isPresent()) {
-            logger.error("Department not found by id");
-            throw new RestException("Department not found by id");
+            logger.error("Department not found");
+            throw new RestException("Department not found");
         }
 
         Department department = departmentOptional.get();
@@ -110,13 +110,13 @@ public class DepartmentController {
         Optional<User> userOptional = this.userService.findById(userId);
         if (!userOptional.isPresent()) {
             logger.info("User not found by id");
-            throw new RestException("User not found by id");
+            throw new RestException("User not found");
         }
 
         Optional<Department> departmentOptional = this.departmentService.findById(departmentId);
         if (!departmentOptional.isPresent()) {
             logger.info("Department not found by id");
-            throw new RestException("Department not found by id");
+            throw new RestException("Department not found");
         }
 
         User user = userOptional.get();
