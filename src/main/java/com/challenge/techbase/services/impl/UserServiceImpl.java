@@ -1,13 +1,20 @@
 package com.challenge.techbase.services.impl;
 
 import com.challenge.techbase.mappers.UserRepository;
+import com.challenge.techbase.models.dto.paging.PagingDto;
+import com.challenge.techbase.models.dto.paging.PagingParams;
 import com.challenge.techbase.models.entity.Team;
 import com.challenge.techbase.models.entity.User;
 import com.challenge.techbase.services.UserService;
+import com.challenge.techbase.util.Enum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
@@ -24,25 +31,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
-    public User login(String email, String password) {
-        Optional<User> userOptional = userRepo.findByEmail(email);
-
-        if (!userOptional.isPresent()){
-            logger.error(
-                    messageSource.getMessage("email.notfound",new Object[] {email}, Locale.getDefault()));
-            return null;
-        }
-
-        User user = userOptional.get();
-        if (user.getPassword().equals(password)) {
-            return user;
-        }
-        return null;
+    public boolean checkLogin(User user, String password) {
+        return bCryptPasswordEncoder.matches(password, user.getPassword());
     }
 
     @Override
-    public User saveUser(User user) {
+    public User save(User user) {
         return this.userRepo.saveAndFlush(user);
     }
 
@@ -70,5 +68,28 @@ public class UserServiceImpl implements UserService {
         teams.remove(team);
         user.setTeams(teams);
         this.userRepo.saveAndFlush(user);
+    }
+
+    @Override
+    public PagingDto findAll(PagingParams pagingParams) {
+        String sortColumn = this.getSortColumn(pagingParams.getSortColumn());
+        Sort sort = Sort.by(sortColumn);
+        sort = pagingParams.getDirection() == Enum.SortDirection.ASC ?
+                sort.ascending() : sort.descending();
+
+        PageRequest pageRequest = PageRequest.of(pagingParams.getOffset(), pagingParams.getSize(), sort);
+        Page<User> users = this.userRepo.findAll(pageRequest);
+        Long totalElement = users.getTotalElements();
+        PagingDto<User> pagingDto = new PagingDto<>(totalElement, users.getContent());
+        return pagingDto;
+    }
+
+    private String getSortColumn(String sortColumn) {
+        String columnName = "email";
+        if (sortColumn.isEmpty() || !sortColumn.equals("email")) {
+            columnName = "profile." + sortColumn;
+        }
+
+        return columnName;
     }
 }

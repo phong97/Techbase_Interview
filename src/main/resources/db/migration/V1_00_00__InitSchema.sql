@@ -4,7 +4,7 @@ create table profile
         primary key,
     first_name    varchar(255) not null,
     last_name     varchar(255) not null,
-    date_of_birth datetime     not null,
+    date_of_birth varchar(10)    not null,
     gender        int          not null,
     phone_number  varchar(255) not null
 );

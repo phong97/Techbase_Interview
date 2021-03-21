@@ -10,7 +10,7 @@ public interface DepartmentService {
 
     Department save(Department department);
 
-    void delete(Department department);
+    Department delete(Department department);
 
     List<Department> findAll();
 

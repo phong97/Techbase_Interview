@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ import java.util.Optional;
 
 @Validated
 @RestController
-@RequestMapping("/api/v1/team")
+@RequestMapping("/api/v1/teams")
 public class TeamController {
     private static final Logger logger = LoggerFactory.getLogger(Team.class);
 
@@ -52,6 +53,7 @@ public class TeamController {
         return ResponseEntity.ok(teamDto);
     }
 
+    @Secured({"ROLE_CEO", "ROLE_MANAGER"})
     @PostMapping
     public ResponseEntity<TeamDto> createTeam(@Valid @RequestBody CreateTeamRequest req) {
         Team team = req.toModel();
@@ -60,6 +62,7 @@ public class TeamController {
         return ResponseEntity.ok(teamDto);
     }
 
+    @Secured({"ROLE_CEO", "ROLE_MANAGER"})
     @PutMapping
     public ResponseEntity<TeamDto> updateTeam(@Valid @RequestBody UpdateTeamRequest req) {
         Integer teamId = req.getId();
@@ -76,8 +79,9 @@ public class TeamController {
         return ResponseEntity.ok(teamDto);
     }
 
+    @Secured({"ROLE_CEO", "ROLE_MANAGER"})
     @DeleteMapping("/{id}")
-    public ResponseEntity<TeamDto> deleteTeam(@PathVariable("id") Integer teamId){
+    public ResponseEntity<TeamDto> deleteTeam(@PathVariable("id") Integer teamId) {
         Optional<Team> teamOptional = this.teamService.findById(teamId);
         if (!teamOptional.isPresent()) {
             logger.error("Team not found by id");
@@ -90,8 +94,9 @@ public class TeamController {
         return ResponseEntity.ok(teamDto);
     }
 
+    @Secured({"ROLE_CEO", "ROLE_MANAGER"})
     @PostMapping("/add_member")
-    public ResponseEntity<Void> addMember(@Valid @RequestBody AddMemberRequest req){
+    public ResponseEntity<Void> addMember(@Valid @RequestBody AddMemberRequest req) {
         Integer teamId = req.getTeamId();
         Integer userId = req.getUserId();
 
@@ -113,8 +118,9 @@ public class TeamController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Secured({"ROLE_CEO", "ROLE_MANAGER"})
     @PostMapping("/remove_member")
-    public ResponseEntity<Void> removeMember(@Valid @RequestBody RemoveMemberRequest req){
+    public ResponseEntity<Void> removeMember(@Valid @RequestBody RemoveMemberRequest req) {
         Integer teamId = req.getTeamId();
         Integer userId = req.getUserId();
 
@@ -135,4 +141,5 @@ public class TeamController {
         this.userService.removeMember(team, user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

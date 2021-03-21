@@ -19,6 +19,6 @@ public class DepartmentDto {
         this.id = department.getId();
         this.name = department.getName();
         this.status = department.getStatus();
-        this.manager = new UserDetailDto(department.getUser());
+        this.manager = department.getUser() == null ? null : new UserDetailDto(department.getUser());
     }
 }

@@ -22,7 +22,7 @@ public class Profile {
     @NotNull
     private String lastName;
     @NotNull
-    private Date dateOfBirth;
+    private String dateOfBirth;
     @NotNull
     private Gender gender;
     @NotNull
@@ -34,7 +34,7 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(int id, String firstName, String lastName, Date dateOfBirth,
+    public Profile(int id, String firstName, String lastName, String dateOfBirth,
                    Gender gender, String phoneNumber, User user) {
         this.id = id;
         this.firstName = firstName;

@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,8 @@ import java.util.stream.Collectors;
 
 @Validated
 @RestController
-@RequestMapping("/api/v1/department")
+@RequestMapping("/api/v1/departments")
+@Secured({ "ROLE_CEO" })
 public class DepartmentController {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentController.class);
 
@@ -68,7 +70,7 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDto> createDepartment(@Valid @RequestBody CreateDepartmentRequest req) {
         Department department = req.toModel();
         Department newDepartment = this.departmentService.save(department);
-        DepartmentDto departmentDto = new DepartmentDto(department);
+        DepartmentDto departmentDto = new DepartmentDto(newDepartment);
         return ResponseEntity.ok(departmentDto);
     }
 
@@ -82,7 +84,7 @@ public class DepartmentController {
         Department department = departmentOptional.get();
         Department newDepartment = req.toModel(department);
         newDepartment = this.departmentService.save(newDepartment);
-        DepartmentDto departmentDto = new DepartmentDto(department);
+        DepartmentDto departmentDto = new DepartmentDto(newDepartment);
         return ResponseEntity.ok(departmentDto);
     }
 
@@ -95,8 +97,7 @@ public class DepartmentController {
         }
 
         Department department = departmentOptional.get();
-        department.setStatus(Status.DELETED);
-        Department newDepartment = departmentOptional.get();
+        Department newDepartment = this.departmentService.delete(department);
         DepartmentDto departmentDto = new DepartmentDto(newDepartment);
         return ResponseEntity.ok(departmentDto);
     }
@@ -125,28 +126,4 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentDto);
     }
 
-//    @PostMapping("/add_team")
-//    public ResponseEntity<Void> addTeam(@Valid @RequestBody AddTeamRequest req) {
-//        Integer departmentId = req.getDepartmentId();
-//        Integer teamId = req.getTeamId();
-//
-//        Optional<Department> departmentOptional = this.departmentService.findById(departmentId);
-//        if (!departmentOptional.isPresent()){
-//            logger.info("Department not found by id");
-//            throw new RestException("Department not found by id");
-//        }
-//
-//        Optional<Team> teamOptional = this.teamService.findById(teamId);
-//        if (!teamOptional.isPresent()){
-//            logger.error("Team not found by id");
-//            throw new RestException("Team not found by id");
-//        }
-//
-//        Department department = departmentOptional.get();
-//        Team team = teamOptional.get();
-//        department.getTeams().add(team);
-//        this.departmentService.save(department);
-//
-//        return ResponseEntity.ok();
-//    }
 }

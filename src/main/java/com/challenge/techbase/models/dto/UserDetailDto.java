@@ -13,9 +13,12 @@ public class UserDetailDto {
     private String email;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private Gender gender;
     private String phoneNumber;
+
+    public UserDetailDto() {
+    }
 
     public UserDetailDto(User user) {
         this.email = user.getEmail();

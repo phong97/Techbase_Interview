@@ -17,7 +17,7 @@ public class TeamDto {
         this.id = team.getId();
         this.name = team.getName();
         this.status = team.getStatus();
-        this.department = new DepartmentDto(team.getDepartment());
+        this.department = team.getDepartment() == null ? null : new DepartmentDto(team.getDepartment());
     }
 
 }

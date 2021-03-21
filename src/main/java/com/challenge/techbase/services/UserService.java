@@ -1,5 +1,7 @@
 package com.challenge.techbase.services;
 
+import com.challenge.techbase.models.dto.paging.PagingDto;
+import com.challenge.techbase.models.dto.paging.PagingParams;
 import com.challenge.techbase.models.entity.Team;
 import com.challenge.techbase.models.entity.User;
 
@@ -7,9 +9,9 @@ import java.util.Optional;
 
 public interface UserService {
 
-    User login(String email, String password);
+    boolean checkLogin(User user, String password);
 
-    User saveUser(User user);
+    User save(User user);
 
     Optional<User> findByEmail(String email);
 
@@ -18,4 +20,6 @@ public interface UserService {
     void addMember(Team team, User user);
 
     void removeMember(Team team, User user);
+
+    PagingDto findAll(PagingParams pagingParams);
 }

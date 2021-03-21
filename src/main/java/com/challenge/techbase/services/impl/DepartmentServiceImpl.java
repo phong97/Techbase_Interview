@@ -23,10 +23,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void delete(Department department) {
+    public Department delete(Department department) {
         department.setStatus(Enum.Status.DELETED);
-
-        this.departmentRepo.saveAndFlush(department);
+        return this.departmentRepo.saveAndFlush(department);
     }
 
     @Override
@@ -42,7 +41,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department assignManager(Department department, User user) {
         department.setUser(user);
-
         return this.departmentRepo.saveAndFlush(department);
     }
 }
