@@ -1,7 +1,6 @@
 package com.challenge.techbase.services;
 
 import com.challenge.techbase.models.entity.Team;
-import com.challenge.techbase.models.entity.User;
 
 import java.util.Optional;
 

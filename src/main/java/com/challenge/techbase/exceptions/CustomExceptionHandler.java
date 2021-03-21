@@ -34,7 +34,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
-    @ExceptionHandler(value = { RestException.class })
+    @ExceptionHandler(value = {RestException.class})
     public ResponseEntity<RestExceptionResponse> handleRestException(RestException exception) {
         RestExceptionResponse response = new RestExceptionResponse(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), LocalDateTime.now());
 

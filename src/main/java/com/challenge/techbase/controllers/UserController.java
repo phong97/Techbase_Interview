@@ -48,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(userDetailDto);
     }
 
-    @Secured({ "ROLE_CEO" })
+    @Secured({"ROLE_CEO"})
     @PostMapping
     public ResponseEntity<FindAllUserResponse> findAllUser(@Valid @RequestBody FindAllUserRequest req) {
         PagingParams pagingParams = new PagingParams(req.getOffset(), req.getSize(), req.getSortColumn(), req.getSortDirection());
@@ -61,7 +61,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @Secured({ "ROLE_CEO" })
+    @Secured({"ROLE_CEO"})
     @PostMapping("/register")
     public ResponseEntity<UserDetailDto> register(@Valid @RequestBody RegisterReq req) {
         Optional<User> userOptional = this.userService.findByEmail(req.getEmail());

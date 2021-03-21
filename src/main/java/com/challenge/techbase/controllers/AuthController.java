@@ -1,7 +1,6 @@
 package com.challenge.techbase.controllers;
 
 import com.challenge.techbase.exceptions.RestException;
-import com.challenge.techbase.models.dto.ReqData;
 import com.challenge.techbase.models.dto.req.LoginRequest;
 import com.challenge.techbase.models.entity.User;
 import com.challenge.techbase.models.security.JwtAuthenticationResponse;
@@ -40,7 +39,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponse> login(@Valid @RequestBody LoginRequest req) {
-        ReqData reqData = new ReqData();
         Optional<User> userOptional = this.userService.findByEmail(req.getEmail());
         if (!userOptional.isPresent()) {
             logger.error("User not found with email [{}].", req.getEmail());

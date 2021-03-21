@@ -1,13 +1,11 @@
 package com.challenge.techbase.controllers;
 
 import com.challenge.techbase.exceptions.RestException;
-import com.challenge.techbase.models.dto.DepartmentDto;
 import com.challenge.techbase.models.dto.TeamDto;
 import com.challenge.techbase.models.dto.req.AddMemberRequest;
 import com.challenge.techbase.models.dto.req.CreateTeamRequest;
 import com.challenge.techbase.models.dto.req.RemoveMemberRequest;
 import com.challenge.techbase.models.dto.req.UpdateTeamRequest;
-import com.challenge.techbase.models.entity.Department;
 import com.challenge.techbase.models.entity.Team;
 import com.challenge.techbase.models.entity.User;
 import com.challenge.techbase.services.DepartmentService;
@@ -102,13 +100,13 @@ public class TeamController {
 
         Optional<Team> teamOptional = this.teamService.findById(teamId);
         if (!teamOptional.isPresent()) {
-            logger.info("Team not found by id");
+            logger.error("Team not found by id");
             throw new RestException("Team not found by id");
         }
 
         Optional<User> userOptional = this.userService.findById(userId);
         if (!userOptional.isPresent()) {
-            logger.info("User not found");
+            logger.error("User not found");
             throw new RestException("User not found");
         }
 
@@ -126,13 +124,13 @@ public class TeamController {
 
         Optional<Team> teamOptional = this.teamService.findById(teamId);
         if (!teamOptional.isPresent()) {
-            logger.info("Team not found");
+            logger.error("Team not found");
             throw new RestException("Team not found");
         }
 
         Optional<User> userOptional = this.userService.findById(userId);
         if (!userOptional.isPresent()) {
-            logger.info("User not found by id");
+            logger.error("User not found by id");
             throw new RestException("User not found");
         }
 

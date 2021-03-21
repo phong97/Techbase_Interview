@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Validated
 @RestController
 @RequestMapping("/api/v1/departments")
-@Secured({ "ROLE_CEO" })
+@Secured({"ROLE_CEO"})
 public class DepartmentController {
     private static final Logger logger = LoggerFactory.getLogger(DepartmentController.class);
 
@@ -109,13 +109,13 @@ public class DepartmentController {
 
         Optional<User> userOptional = this.userService.findById(userId);
         if (!userOptional.isPresent()) {
-            logger.info("User not found by id");
+            logger.error("User not found by id");
             throw new RestException("User not found");
         }
 
         Optional<Department> departmentOptional = this.departmentService.findById(departmentId);
         if (!departmentOptional.isPresent()) {
-            logger.info("Department not found by id");
+            logger.error("Department not found by id");
             throw new RestException("Department not found");
         }
 
